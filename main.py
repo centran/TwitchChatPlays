@@ -11,6 +11,7 @@ from gta_controls import gameCommands
 
 
 commandDelay = 5.0
+endProgramKey = 'f6'
 global commandsFromChat
 commandsFromChat = {}
 
@@ -35,6 +36,7 @@ class Bot(commands.Bot):
         Event called when bot is logged in and ready
         """
         print(f'Logged in as | {self.nick} ({self.user_id})')
+        keyboard.add_hotkey(endProgramKey, self.close())
 
     async def event_message(self, message):
         """This function is a coroutine
