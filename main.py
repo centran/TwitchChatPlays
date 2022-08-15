@@ -11,9 +11,11 @@ from gta_controls import gameCommands
 
 
 commandDelay = 5.0
-endProgramKey = 'f6'
+stopStartKey = 'f6'
 global commandsFromChat
 commandsFromChat = {}
+global running
+running = False
 
 
 class Bot(commands.Bot):
@@ -36,7 +38,6 @@ class Bot(commands.Bot):
         Event called when bot is logged in and ready
         """
         print(f'Logged in as | {self.nick} ({self.user_id})')
-        keyboard.add_hotkey(endProgramKey, self.close())
 
     async def event_message(self, message):
         """This function is a coroutine
@@ -56,6 +57,7 @@ class Bot(commands.Bot):
         # We must let the bot know we want to handle and invoke our commands...
         await self.handle_commands(message)
 
+
 # can add chatbot commands if needed
 #    @commands.command()
 #    async def hello(self, ctx: commands.Context):
@@ -74,12 +76,13 @@ async def tally_commands():
     print(
         str(len(commandsFromChat)) +
         " people voted for commands."
-        )
+    )
     if len(command) > 0:
         print(
             command[0][0] + ' - won with ' +
             str(command[0][1]) + ' votes'
-            )
+        )
+        #message = commands.Context    
         run_command(command[0][0])
     commandsFromChat = {}
 
@@ -124,7 +127,19 @@ def run_command(command):
             keyboard.release(gameCommands.COMMAND_LIST[command]['keyboard'][0])
 
 
-if __name__ == "__main__":
-    tally_commands.start()
-    bot = Bot()
-    bot.run()
+def startProgram(bot):
+    global running
+    if running:
+        print(f"STOPing - Press {stopStartKey} to resume or ctrl+c to quit")
+        tally_commands.stop()
+        running = False
+    else:
+        running = True
+        print(f"STARTing with {commandDelay} second delay between actions")
+        tally_commands.start()
+
+
+bot = Bot()
+keyboard.add_hotkey(stopStartKey, lambda: startProgram(bot))
+print(f"Waiting... press {stopStartKey} to start. (will also stop once started)")
+bot.run()
