@@ -19,12 +19,12 @@ class gameCommands:
         "Left": {
             "alias": ['a', "left"],
             "keyboard": ['a','c'],
-            "duration": 5
+            "duration": 1
         },
         "Right": {
             "alias": ["d", "right"],
             "keyboard": ['d','c'],
-            "duration": 5
+            "duration": 1
         },
         "Back": {
             "alias": ["s", "back", "backward"],
@@ -126,6 +126,11 @@ class gameCommands:
         "Buckle": {
             "alias": ["b", "buckle", "seatbelt", "belt"],
             "keyboard": ['b'],
+            "duration": 0.1
+        },
+        "Select/Horn": {
+            "alias": ["e","honk"],
+            "keyboard": ['e'],
             "duration": 0.1
         },
     }
