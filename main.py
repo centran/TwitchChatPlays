@@ -11,7 +11,7 @@ from gta_controls import gameCommands
 
 
 commandDelay = 5.0
-stopStartKey = 'f6'
+stopStartKey = 'f9'
 global commandsFromChat
 commandsFromChat = {}
 global running
